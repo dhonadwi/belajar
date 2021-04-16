@@ -1,4 +1,4 @@
-const CACHE_NAME = "firstpwa-v1";
+const CACHE_NAME = "bookShelf-v2";
 var urlsToCache = [
   "/",
   "/nav.html",
@@ -10,6 +10,7 @@ var urlsToCache = [
   "/css/materialize.min.css",
   "/js/materialize.min.js",
   "/js/nav.js",
+  "/js/api.js",
   "/icon/icon.png",
   "/manifest.json",
   "/icon.ico"
@@ -47,7 +48,7 @@ self.addEventListener("activate", function (event) {
     caches.keys().then(function (cacheNames) {
       return Promise.all(
         cacheNames.map(function (cacheName) {
-          if (cacheName != CACHE_NAME && cacheName.startsWith("firstpwa-")) {
+          if (cacheName != CACHE_NAME && cacheName.startsWith("bookShelf-")) {
             console.log("ServiceWorker: cache " + cacheName + " dihapus");
             return caches.delete(cacheName);
           }
