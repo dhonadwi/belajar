@@ -14,6 +14,6 @@ if ("serviceWorker" in navigator) {
   console.log("ServiceWorker belum didukung browser ini.");
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  getBooks();
-})
+// document.addEventListener('DOMContentLoaded', () => {
+//   getBooks();
+// })

@@ -19,7 +19,35 @@ const error = error => {
 }
 
 const getBooks = () => {
-    console.log(`${base_url}books`);
+    // console.log(`${base_url}books`);
+    if ('caches' in window) {
+        console.log('caches' in window);
+        caches.match(`${base_url}books`)
+            .then(response => {
+                if (response) {
+                    response.json()
+                        .then(results => {
+                            let articleHTML = "";
+                            results.data.books.forEach(book => {
+                                articleHTML += `
+                                <div class="card">
+                                <a href="./book.html?id=${book.id}">
+                                  <div class="card-image waves-effect waves-block waves-light">
+                                    <img src="https://static.cdn-cdpl.com/270x135/2b9f4ed2c46d42f883ab3439e02cd503/main-visual0-pc.png" />
+                                  </div>
+                                </a>
+                                <div class="card-content">
+                                  <span class="card-title truncate">${book.name}</span>
+                                  <p>${book.publisher}</p>
+                                </div>
+                              </div>
+                                `
+                            });
+                            document.querySelector('#articles').innerHTML = articleHTML;
+                        })
+                }
+            })
+    }
     fetch(`${base_url}books`)
         .then(statusResponse)
         .then(json)
@@ -28,7 +56,7 @@ const getBooks = () => {
             results.data.books.forEach(book => {
                 articleHTML += `
                 <div class="card">
-                <a href="./article.html?id=${book.id}">
+                <a href="./book.html?id=${book.id}">
                   <div class="card-image waves-effect waves-block waves-light">
                     <img src="https://static.cdn-cdpl.com/270x135/2b9f4ed2c46d42f883ab3439e02cd503/main-visual0-pc.png" />
                   </div>
@@ -43,4 +71,56 @@ const getBooks = () => {
             document.querySelector('#articles').innerHTML = articleHTML;
         })
         .catch(error);
+}
+
+const getBookById = () => {
+    let urlParams = new URLSearchParams(window.location.search);
+    const idParam = urlParams.get("id");
+    if ('caches' in window) {
+        console.log('caches' in window);
+        caches.match(`${base_url}books/${idParam}`)
+            .then(response => {
+                if (response) {
+                    response.json()
+                        .then(result => {
+                            const { name, summary } = result.data.book;
+                            var articleHTML = `
+                  <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                      <img src="https://static.cdn-cdpl.com/270x135/2b9f4ed2c46d42f883ab3439e02cd503/main-visual0-pc.png" />
+                    </div>
+                    <div class="card-content">
+                      <span class="card-title">${name}</span>
+                      ${summary}
+                    </div>
+                  </div>
+                `;
+
+                            document.querySelector('#body-content').innerHTML = articleHTML;
+                        })
+                }
+            })
+    }
+
+    fetch(`${base_url}books/${idParam}`)
+        .then(statusResponse)
+        .then(json)
+        .then(result => {
+            const { name, summary } = result.data.book;
+            var articleHTML = `
+          <div class="card">
+            <div class="card-image waves-effect waves-block waves-light">
+              <img src="https://static.cdn-cdpl.com/270x135/2b9f4ed2c46d42f883ab3439e02cd503/main-visual0-pc.png" />
+            </div>
+            <div class="card-content">
+              <span class="card-title">${name}</span>
+              ${summary}
+            </div>
+          </div>
+        `;
+
+            document.querySelector('#body-content').innerHTML = articleHTML;
+
+        })
+
 }
