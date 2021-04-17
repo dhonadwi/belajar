@@ -1,3 +1,6 @@
+// const mainApi = () => {
+
+
 const base_url = "http://13.229.240.223:5000/";
 
 const statusResponse = response => {
@@ -76,6 +79,8 @@ const getBooks = () => {
         })
         .catch(error);
 
+        showNotifikasiSederhana();
+
 }
 
 const getBookById = () => {
@@ -127,5 +132,45 @@ const getBookById = () => {
             document.querySelector('#body-content').innerHTML = articleHTML;
 
         })
+        showNotifikasiSederhana();
 
 }
+
+function showNotifikasiSederhana() {
+  const title = 'Notifikasi Sederhana';
+  const options = {
+      // 'body': 'Ini adalah konten notifikasi. \nBisa menggunakan baris baru.',
+      'body': `Ini adalah konten notifikasi.
+Bisa menggunakan baris.`,
+      requireInteraction: true,
+      'icon': '/icon/icon.png',
+      'badge': '/icon/icon.png',
+      'actions': [
+        {
+            'action': 'yes-action',
+            'title': 'Ya',
+            // 'icon': '/img/yes.png'
+        },
+        {
+            'action': 'no-action',
+            'title': 'Tidak',
+            // 'icon': '/img/no.png'
+        }
+    ],
+    //dipake harus bareng
+    // 'tag': 'message-group-1',
+    // 'renotify': true,
+  }
+  if (Notification.permission === 'granted') {
+      navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification(title, options);
+      });
+  } else {
+      console.error('FItur notifikasi tidak diijinkan.');
+  }
+}
+
+
+// }
+
+// module.export = mainApi;

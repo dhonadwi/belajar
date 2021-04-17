@@ -6,30 +6,44 @@ else
   console.log(`Workbox gagal dimuat`);
 
 workbox.precaching.precacheAndRoute([
-  // { url: '/book.html', revision: '1' },
   { url: '/icon.ico', revision: '1' },
+  { url: '/icon/icon.png', revision: '1' },
   { url: '/index.html', revision: '1' },
   { url: '/index.js', revision: '1' },
   { url: '/manifest.json', revision: '1' },
   { url: '/nav.html', revision: '1' },
   { url: '/css/materialize.min.css', revision: '1' },
-  { url: '/js/api.js', revision: '1' },
+  { url: '/js/api.js', revision: '2' },
   { url: '/js/idb.js', revision: '1' },
   { url: '/js/materialize.min.js', revision: '1' },
   { url: '/js/nav.js', revision: '1' },
-
-
-  // { url: '/pages/about.html', revision: '1' },
-  // { url: '/pages/contact.html', revision: '1' },
-  // { url: '/pages/home.html', revision: '1' },
 ]);
 
 // workbox.routing.registerRoute(
 //   new RegExp('/pages/'),
 //   workbox.strategies.staleWhileRevalidate({
-//     cacheName: 'pages'
+//     cacheName: 'pages',
+//     plugins: [
+//       new workbox.expiration.Plugin({
+//         maxAgeSeconds: 60 * 3,
+//         maxEntries: 5,
+//       })
+//     ]
 //   })
 // );
+workbox.routing.registerRoute(
+  new RegExp('/pages/'),
+  workbox.strategies.networkFirst({
+      networkTimeoutSeconds: 3,     // 3 detik
+      cacheName: 'pages',
+          plugins: [
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 3,
+        maxEntries: 5,
+      })
+    ]
+  })
+);
 
 workbox.routing.registerRoute(
   new RegExp('/book.html'),
@@ -87,3 +101,26 @@ workbox.routing.registerRoute(
     ],
   })
 );
+
+self.addEventListener('notificationclick', function (event) {
+  event.notification.close();
+  if (!event.action) {
+    // Penguna menyentuh area notifikasi diluar action
+    console.log('Notification Click.');
+    return;
+  }
+  switch (event.action) {
+    case 'yes-action':
+      console.log('Pengguna memilih action yes.');
+      // buka tab baru
+      clients.openWindow('https://google.com');
+      break;
+    case 'no-action':
+      console.log('Pengguna memilih action no');
+      break;
+    default:
+      console.log(`Action yang dipilih tidak dikenal: '${event.action}'`);
+      break;
+  }
+});
+
