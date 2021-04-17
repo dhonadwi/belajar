@@ -79,11 +79,14 @@ const getBooks = () => {
         })
         .catch(error);
 
-        showNotifikasiSederhana();
+        // showNotifikasiSederhana();
 
 }
 
-const getBookById = () => {
+const getBookById = (buku) => {
+  return new Promise((resolve, reject) => {
+
+  
     let urlParams = new URLSearchParams(window.location.search);
     const idParam = urlParams.get("id");
     if ('caches' in window) {
@@ -107,6 +110,7 @@ const getBookById = () => {
                 `;
 
                             document.querySelector('#body-content').innerHTML = articleHTML;
+                           resolve(result);
                         })
                 }
             })
@@ -130,10 +134,10 @@ const getBookById = () => {
         `;
 
             document.querySelector('#body-content').innerHTML = articleHTML;
-
+            resolve(result);
         })
-        showNotifikasiSederhana();
-
+        // showNotifikasiSederhana();
+      })
 }
 
 function showNotifikasiSederhana() {

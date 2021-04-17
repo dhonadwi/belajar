@@ -13,7 +13,8 @@ workbox.precaching.precacheAndRoute([
   { url: '/manifest.json', revision: '1' },
   { url: '/nav.html', revision: '1' },
   { url: '/css/materialize.min.css', revision: '1' },
-  { url: '/js/api.js', revision: '2' },
+  { url: '/js/api.js', revision: '9' },
+  { url: '/js/db.js', revision: '9' },
   { url: '/js/idb.js', revision: '1' },
   { url: '/js/materialize.min.js', revision: '1' },
   { url: '/js/nav.js', revision: '1' },
@@ -48,7 +49,13 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
   new RegExp('/book.html'),
   workbox.strategies.staleWhileRevalidate({
-    cacheName: 'book'
+    cacheName: 'book',
+    plugins:[
+    new workbox.expiration.Plugin({
+      maxAgeSeconds: 60 * 3,
+      maxEntries: 5,
+    })
+  ]
   })
 )
 
@@ -122,5 +129,39 @@ self.addEventListener('notificationclick', function (event) {
       console.log(`Action yang dipilih tidak dikenal: '${event.action}'`);
       break;
   }
+});
+
+self.addEventListener('push', function(event) {
+  var body;
+  if (event.data) {
+    body = event.data.text();
+  } else {
+    body = 'Push message no payload';
+  }
+  var options = {
+    body: body,
+    icon: 'icon/icon.png',
+    vibrate: [100, 50, 100],
+    badge: '/icon/icon.png',
+    actions: [
+        {
+            'action': 'yes-action',
+            'title': 'Ya',
+            // 'icon': '/img/yes.png'
+        },
+        {
+            'action': 'no-action',
+            'title': 'Tidak',
+            // 'icon': '/img/no.png'
+        }
+    ],
+    data: {
+      dateOfArrival: Date.now(),
+      primaryKey: 1
+    }
+  };
+  event.waitUntil(
+    self.registration.showNotification('Push Notification', options)
+  );
 });
 
