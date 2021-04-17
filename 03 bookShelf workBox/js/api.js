@@ -140,6 +140,32 @@ const getBookById = (buku) => {
       })
 }
 
+const getSavedBook = () => {
+  getAll().then(books => {
+    let booksHtml ='';
+    books.forEach(book => {
+      const {id,name,author, publisher, summary} = book;
+      booksHtml += `
+      <div class="card">
+                    <a href="./book.html?id=${id}&saved=true&name=${name}">
+                      <div class="card-image waves-effect waves-block waves-light">
+                        <img src="https://static.cdn-cdpl.com/270x135/2b9f4ed2c46d42f883ab3439e02cd503/main-visual0-pc.png" />
+                      </div>
+                    </a>
+                    <div class="card-content">
+                      <span class="card-title truncate">${name}</span>
+                      <p>Penulis : ${author}, Penerbit : ${publisher}</p>
+                      <p>${summary}</p>
+                    </div>
+                  </div>
+      `
+    })
+    document.querySelector('#body-content').innerHTML = booksHtml ;
+  })
+}
+
+
+
 function showNotifikasiSederhana() {
   const title = 'Notifikasi Sederhana';
   const options = {

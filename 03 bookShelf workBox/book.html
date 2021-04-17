@@ -55,6 +55,15 @@
         // }
 
         document.addEventListener('DOMContentLoaded', () => {
+            const ulrParams = new URLSearchParams(window.location.search);
+            const isFromSaved = ulrParams.get('saved');
+            const name = ulrParams.get('name');
+            if (isFromSaved) {
+                console.log(`${isFromSaved} dan ${name}`);
+            } else {
+                console.log('dari server');
+            }
+
             const item = getBookById();
             getBookById();
             const save = document.getElementById("save");

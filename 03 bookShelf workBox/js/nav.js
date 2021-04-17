@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (response.status === 200) {
           if (page == 'home') {
             getBooks();
+          } else if (page === 'saveBook') {
+            getSavedBook();
           }
           return response.text()
         } else if (response.status === 404) {
