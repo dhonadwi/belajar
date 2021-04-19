@@ -1,0 +1,6 @@
+.jumboTron{
+  position: sticky;
+  top: 0;
+  z-index: 10000;
+  background: linear-gradient(to left, #000046, #1cb5e0);
+}
