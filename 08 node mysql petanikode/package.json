@@ -1,0 +1,27 @@
+{
+  "name": "hapi-web-sever",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "lint": "eslint ./"
+  },
+  "keywords": [],
+  "author": "Dhona Dwi",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^20.1.2",
+    "mysql": "^2.18.1",
+    "nanoid": "^3.1.22",
+    "nodemon": "^2.0.7"
+  }
+}
