@@ -17,13 +17,9 @@ hapiServer.connection({
 
 // mysql settings
 var connection = mysql.createConnection({
-    // host: 'ksucipta.org',
-    // user: 'u5983700_karyawan',
-    // password: 'KSUcipta132',
-    // database: 'u5983700_karyawan'
     host: 'localhost',
     user: 'root',
-    password: 'p6s2y805',
+    password: '',
     database: 'master_karyawan'
 });
 
