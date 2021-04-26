@@ -10,7 +10,6 @@ db.connect(function (err) {
     // console.log(JSON.stringify(result));
     // hasil = JSON.stringify(result);
     hasil = JSON.parse(JSON.stringify(result))
-    console.log(hasil);
   });
   db.end(function (err) {
     if (err) {
@@ -20,6 +19,7 @@ db.connect(function (err) {
   });
 });
 
+console.log(hasil);
 
 
-// module.exports = queryDb;
+// module.exports = hasil;

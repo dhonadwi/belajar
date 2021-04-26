@@ -1,21 +1,20 @@
-const db = require("./db_config");
+const hasil = require("../../read");
+// let hasil;
+// db.connect(function (err) {
+//   if (err) throw err;
 
-let hasil;
-db.connect(function (err) {
-  if (err) throw err;
-
-  let sql = "SELECT * FROM dta_karyawan";
-  db.query(sql, function (err, result) {
-    if (err) throw err;
-    hasil = JSON.parse(JSON.stringify(result))
-  });
-  db.end(function (err) {
-    if (err) {
-      return console.log('error:' + err.message);
-    }
-    console.log('Close the database connection.');
-  });
-});
+//   let sql = "SELECT * FROM dta_karyawan";
+//   db.query(sql, function (err, result) {
+//     if (err) throw err;
+//     hasil = JSON.parse(JSON.stringify(result))
+//   });
+//   db.end(function (err) {
+//     if (err) {
+//       return console.log('error:' + err.message);
+//     }
+//     console.log('Close the database connection.');
+//   });
+// });
 
 
 
