@@ -1,11 +1,10 @@
 // RESTful API Hapi + Mysql
 // memanggil instances hapi
-var hapi = require('hapi');
-var mysql = require('mysql');
+const hapi = require('@hapi/hapi');
+const mysql = require('mysql');
 
 // membuat server dan konfigurasi http
-var hapiServer = new hapi.Server();
-hapiServer.connection({
+const hapiServer = hapi.Server({
     host: 'localhost',
     port: 7728,
     routes: {
@@ -15,11 +14,16 @@ hapiServer.connection({
     },
 });
 
+
 // mysql settings
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
+    // host: 'ksucipta.org',
+    // user: 'u5983700_karyawan',
+    // password: 'KSUcipta132',
+    // database: 'u5983700_karyawan'
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'p6s2y805',
     database: 'master_karyawan'
 });
 
@@ -31,7 +35,9 @@ connection.connect(function (err) {
 });
 
 // route list
-var noteRouter = require('./routerModule/note.js')(hapiServer, connection);
+// const noteRouter = require('./routerModule/note.js')(hapiServer, connection);
+const routerModule = require('./routerModule/note')(hapiServer, connection);
+hapiServer.route(routerModule);
 
 // menjalankan hapi
 hapiServer.start(

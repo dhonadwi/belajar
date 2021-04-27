@@ -1,16 +1,17 @@
 {
-  "name": "hapi-mysql",
+  "name": "hapi-web-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index"
+    "start": "nodemon server.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^20.1.2",
-    "mysql": "^2.13.0",
+    "mysql": "^2.18.1",
     "nodemon": "^2.0.7"
   }
 }
